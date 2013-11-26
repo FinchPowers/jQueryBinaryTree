@@ -18,7 +18,7 @@ jQuery.fn.btree = function(options){
 };
 
 function Btree(caller, options){
-	var jg = new jsGraphics(document.getElementById(caller.attr("id")));
+	var jg = new jsGraphics( caller[0] );
 	caller.css("position", "relative");
 	this.caller = caller;
 	this.size = null;
@@ -49,7 +49,6 @@ Btree.prototype.displayTree = function(){
 	var spanHeight = 0;
 	var jg = this.settings.jsGraphics;
 	jg.clear();
-	var callerId = this.caller.attr("id");
 	this.caller.children("div").children("span").each(function(){
 		$(this).css("white-space", "nowrap");
 		$(this).css("display", "inline-block");
@@ -89,6 +88,9 @@ Btree.prototype.displayTree = function(){
 				$(this).css("border-width", borderWidth + "px");
 				$(this).css("width", spanWidth);
 				$(this).css("height", spanHeight);
+				$(this).children("span").each(function(){
+					$(this).css("width", spanWidth);
+				});
 				i ++
 			}
 		});
@@ -111,7 +113,7 @@ Btree.prototype.displayTree = function(){
 			callerTopBorder = 3;		
 		}
 		if(branchStroke > 0){
-			refreshJg(jg, callerId, branchStroke, branchColor);
+			refreshJg(jg, branchStroke, branchColor);
 			i = 0;
 			this.caller.children("div").each(function(){
 				var leftPos = btreeBoxDistance(i);
@@ -172,7 +174,7 @@ Btree.prototype.displayTree = function(){
 			callerTopBorder = 0;		
 		}
 		//once everything is in place, refresh jg
-		refreshJg(jg, callerId, branchStroke, branchColor);
+		refreshJg(jg, branchStroke, branchColor);
 		i = 0;
 		this.caller.children("div").each(function(){
 			if(i < size){
@@ -216,7 +218,7 @@ btreeBoxDistance = function(i){
 	return counter;
 };
 
-refreshJg = function(jg, callerId, branchStroke, branchColor){
+refreshJg = function(jg, branchStroke, branchColor){
 	jg.clear();
 	jg.setStroke(branchStroke);
 	jg.setColor(branchColor);
