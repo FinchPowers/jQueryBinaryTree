@@ -5,3 +5,4 @@ This plugins allows you to display divs in a binary tree format with a single ca
 
 For more info and a working example, see http://frank-mich.com/jQuery/.
 
+License: LPGL v3
